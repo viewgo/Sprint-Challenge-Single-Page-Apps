@@ -27,6 +27,9 @@ const Navigation = () => {
       <div>
         <Link to="/characters">Characters</Link>
       </div>
+      <div>
+        <Link to="/locations">Locations</Link>
+      </div>
     </Nav>
   );
 };

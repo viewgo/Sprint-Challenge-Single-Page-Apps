@@ -14,7 +14,7 @@ export default function CharacterList() {
     justify-content: center;
     align-items: center;
   `;
-  const [data, setData] = useState(testdata);
+  const [data, setData] = useState();
   const [characters, setCharacters] = useState();
   const [search, setSearch] = useState("");
 
@@ -23,10 +23,22 @@ export default function CharacterList() {
   };
 
   useEffect(() => {
-    const charsFromSearch = data.filter(char => char.name.toLowerCase().includes(search.toLowerCase()));
-    setCharacters(charsFromSearch);
+    if (data) {
+      const charsFromSearch = data.filter(char => char.name.toLowerCase().includes(search.toLowerCase()));
+      setCharacters(charsFromSearch);
+    }
   }, [search]);
-  
+
+  //INTITALIZE DATA SET
+
+  //test data to avoid api calls
+  useEffect(() => {
+    setData(testdata);
+    setCharacters(testdata);
+  }, []);
+
+  /*********************************************************uncomment to use API*/
+
   // useEffect(() => {
   //   axios
   //     .get("https://rickandmortyapi.com/api/character/")
@@ -52,6 +64,7 @@ export default function CharacterList() {
 
   //         //SET CHARACTERS FROM API CALLS
   //         setData(apiResponses);
+  //         setCharacters(apiResponses);
   //       })
   //     })
   // }, []);
