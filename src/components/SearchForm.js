@@ -10,7 +10,7 @@ export default function SearchForm(props) {
           value={props.search}
           name="name"
           tabIndex="0"
-          placeholder="Search Characters"
+          placeholder="Search By Name"
           autoComplete="off"
         />
       </form>

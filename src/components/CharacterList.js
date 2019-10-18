@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Spinner } from "reactstrap";
 import axios from "axios";
 import { testdata } from "../testdata";
 import CharacterCard from "./CharacterCard";
 import SearchForm from "./SearchForm";
 import styled from "styled-components";
+
 
 export default function CharacterList() {
   const CharList = styled.div`
@@ -14,6 +16,15 @@ export default function CharacterList() {
     justify-content: center;
     align-items: center;
   `;
+
+  const LoadingDiv = styled.div`
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+
   const [data, setData] = useState();
   const [characters, setCharacters] = useState();
   const [search, setSearch] = useState("");
@@ -70,7 +81,11 @@ export default function CharacterList() {
   // }, []);
 
   if (!characters) {
-    return <>LOADING...</>;
+    return (
+      <LoadingDiv>
+        <Spinner style={{ width: "3rem", height: "3rem", textAlign: "center" }} color="light" type="grow" />
+      </LoadingDiv>
+    );
   }
   return (
     <>
