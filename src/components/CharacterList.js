@@ -43,42 +43,42 @@ export default function CharacterList() {
   //INTITALIZE DATA SET
 
   //test data to avoid api calls
-  useEffect(() => {
-    setData(testdata);
-    setCharacters(testdata);
-  }, []);
+  // useEffect(() => {
+  //   setData(testdata);
+  //   setCharacters(testdata);
+  // }, []);
 
   /*********************************************************uncomment to use API*/
 
-  // useEffect(() => {
-  //   axios
-  //     .get("https://rickandmortyapi.com/api/character/")
-  //     .then(response => {
-  //       const apiPromises = [];
-  //       const apiPages = response.data.info.pages;
+  useEffect(() => {
+    axios
+      .get("https://rickandmortyapi.com/api/character/")
+      .then(response => {
+        const apiPromises = [];
+        const apiPages = response.data.info.pages;
 
-  //       //USE PAGES FROM API TO CREATE LIST OF PROMISES
-  //       for(let i = 1; i <= apiPages; i++){
-  //         apiPromises.push(axios.get(`https://rickandmortyapi.com/api/character/?page=${i}`))
-  //       }
+        //USE PAGES FROM API TO CREATE LIST OF PROMISES
+        for(let i = 1; i <= apiPages; i++){
+          apiPromises.push(axios.get(`https://rickandmortyapi.com/api/character/?page=${i}`))
+        }
 
-  //       //GET ALL THE CHARACTERS ONTO ONE DATA SET FROM MULTIPLE PROMISES
-  //       Promise.all(apiPromises)
-  //       .then(responses => {
-  //         const apiResponses = [];
-  //         responses.map((response) => {
-  //           // apiResponses.push(response.data.results);
-  //           response.data.results.map((element) => {
-  //             apiResponses.push(element);
-  //           })
-  //         })
+        //GET ALL THE CHARACTERS ONTO ONE DATA SET FROM MULTIPLE PROMISES
+        Promise.all(apiPromises)
+        .then(responses => {
+          const apiResponses = [];
+          responses.map((response) => {
+            // apiResponses.push(response.data.results);
+            response.data.results.map((element) => {
+              apiResponses.push(element);
+            })
+          })
 
-  //         //SET CHARACTERS FROM API CALLS
-  //         setData(apiResponses);
-  //         setCharacters(apiResponses);
-  //       })
-  //     })
-  // }, []);
+          //SET CHARACTERS FROM API CALLS
+          setData(apiResponses);
+          setCharacters(apiResponses);
+        })
+      })
+  }, []);
 
   if (!characters) {
     return (
