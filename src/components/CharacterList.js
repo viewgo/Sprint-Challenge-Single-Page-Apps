@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { testdata } from "../testdata";
 import CharacterCard from "./CharacterCard";
+import SearchForm from "./SearchForm";
 import styled from "styled-components";
 
 export default function CharacterList() {
@@ -13,11 +14,19 @@ export default function CharacterList() {
     justify-content: center;
     align-items: center;
   `;
+  const [data, setData] = useState(testdata);
   const [characters, setCharacters] = useState();
+  const [search, setSearch] = useState("");
+
+  const handleInputChange = event => {
+    setSearch(event.target.value);
+  };
 
   useEffect(() => {
-    setCharacters(testdata);
-  }, []);
+    const charsFromSearch = data.filter(char => char.name.toLowerCase().includes(search.toLowerCase()));
+    setCharacters(charsFromSearch);
+  }, [search]);
+  
   // useEffect(() => {
   //   axios
   //     .get("https://rickandmortyapi.com/api/character/")
@@ -42,7 +51,7 @@ export default function CharacterList() {
   //         })
 
   //         //SET CHARACTERS FROM API CALLS
-  //         setCharacters(apiResponses);
+  //         setData(apiResponses);
   //       })
   //     })
   // }, []);
@@ -53,11 +62,12 @@ export default function CharacterList() {
   return (
     <>
       <h2>Characters</h2>
+      <SearchForm search={search} handleInputChange={handleInputChange} />
       <CharList>
         {characters.map((character, index) => (
           <CharacterCard key={index} character={character} />
         ))}
       </CharList>
-      </>
+    </>
   );
 }
